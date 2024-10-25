@@ -3,26 +3,24 @@ import 'dart:convert';
 FactsModel factsModelFromJson(String str) =>
     FactsModel.fromJson(json.decode(str));
 
-String factsModelToJson(FactsModel data) => json.encode(data.toJson());
-
 class FactsModel {
-  int? currentPage;
-  List<Datum>? data;
+  num? currentPage;
+  List<Facts>? factslist;
   String? firstPageUrl;
-  int? from;
-  int? lastPage;
+  num? from;
+  num? lastPage;
   String? lastPageUrl;
   List<Link>? links;
   String? nextPageUrl;
   String? path;
-  int? perPage;
+  num? perPage;
   dynamic prevPageUrl;
-  int? to;
-  int? total;
+  num? to;
+  num? total;
 
   FactsModel({
     this.currentPage,
-    this.data,
+    this.factslist,
     this.firstPageUrl,
     this.from,
     this.lastPage,
@@ -38,9 +36,9 @@ class FactsModel {
 
   factory FactsModel.fromJson(Map<String, dynamic> json) => FactsModel(
         currentPage: json["current_page"],
-        data: json["data"] == null
+        factslist: json["data"] == null
             ? []
-            : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
+            : List<Facts>.from(json["data"]!.map((x) => Facts.fromJson(x))),
         firstPageUrl: json["first_page_url"],
         from: json["from"],
         lastPage: json["last_page"],
@@ -55,46 +53,21 @@ class FactsModel {
         to: json["to"],
         total: json["total"],
       );
-
-  Map<String, dynamic> toJson() => {
-        "current_page": currentPage,
-        "data": data == null
-            ? []
-            : List<dynamic>.from(data!.map((x) => x.toJson())),
-        "first_page_url": firstPageUrl,
-        "from": from,
-        "last_page": lastPage,
-        "last_page_url": lastPageUrl,
-        "links": links == null
-            ? []
-            : List<dynamic>.from(links!.map((x) => x.toJson())),
-        "next_page_url": nextPageUrl,
-        "path": path,
-        "per_page": perPage,
-        "prev_page_url": prevPageUrl,
-        "to": to,
-        "total": total,
-      };
 }
 
-class Datum {
+class Facts {
   String? fact;
-  int? length;
+  num? length;
 
-  Datum({
+  Facts({
     this.fact,
     this.length,
   });
 
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+  factory Facts.fromJson(Map<String, dynamic> json) => Facts(
         fact: json["fact"],
         length: json["length"],
       );
-
-  Map<String, dynamic> toJson() => {
-        "fact": fact,
-        "length": length,
-      };
 }
 
 class Link {
@@ -113,10 +86,4 @@ class Link {
         label: json["label"],
         active: json["active"],
       );
-
-  Map<String, dynamic> toJson() => {
-        "url": url,
-        "label": label,
-        "active": active,
-      };
 }
